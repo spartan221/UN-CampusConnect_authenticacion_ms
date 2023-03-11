@@ -1,0 +1,18 @@
+{
+  "name": "un-campusconnect-_autenticacion_ms",
+  "version": "1.0.0",
+  "description": "Microservice for authenticaction",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "Ivan Alexander Morales Muñoz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
+  }
+}
