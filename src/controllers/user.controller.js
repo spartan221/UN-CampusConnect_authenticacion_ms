@@ -17,3 +17,10 @@ export const getUsers = async (req, res) => {
     }));
     return res.status(200).json(users);
 }
+
+export const unsubscribe = async (req, res) => {
+    const userId = req.userId;
+    await User.findByIdAndDelete(userId);
+    return res.status(200).json({ message: "your account has been deleted" });
+  };
+  
