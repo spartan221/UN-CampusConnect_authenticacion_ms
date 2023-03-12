@@ -10,8 +10,15 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# ENV variables
+ENV PORT=3000
+ENV BASE_URL=http:127.0.0.1:3000
+ENV SERVICE=gmail
+ENV EMAIL=uncampusconnect@gmail.com
+ENV PASS=nwgxazmrzxacyqgf
+
 # Copy the rest of the application code to the container
-COPY . .
+COPY /dist/ ./dist/
 
 # Expose port 3000 for the application
 EXPOSE 3000
