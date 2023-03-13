@@ -40,7 +40,7 @@ export const signup = async (req, res) => {
 
   if (role) {
     const foundRole = await Role.findOne({ name: role });
-    // TODO: Hacer una exepción con el rol admin
+    if ( foundRole.name === 'admin' ) return res.status(401).json({ message: 'unauthorized' });
     newUser.role = foundRole._id;
   }
 
@@ -78,7 +78,9 @@ export const confirmEmail = async (req, res) => {
 };
 
 export const resendEmail = async (req, res) => {
-  const user = User.findOne({email: req.body.email});
+
+  const user = await User.findOne({email: req.body.email});
+
   if (!user) return res.status(400).json({message: 'no user found'});
 
   const token = jwt.sign({ id: user._id }, config.SECRET, {
@@ -86,4 +88,6 @@ export const resendEmail = async (req, res) => {
   });
 
   sendConfirmationEmail(user.email, token);
+
+  return res.status(200).json({message: 'the email has been forwarded'});
 };
