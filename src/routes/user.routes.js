@@ -10,7 +10,8 @@ router.get('/myInfo', authJwt.verifyToken, userController.getMyPersonalInfo);
 
 router.get('/', [ authJwt.verifyToken, authJwt.isAdmin], userController.getUsers);
 
-router.delete('/', authJwt.verifyToken, userController.unsubscribe );
+router.delete('/', authJwt.verifyToken, userController.unsubscribe);
 
+router.get('/:id',  userController.getUserInfo);
 
 export default router;

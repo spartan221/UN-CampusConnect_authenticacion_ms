@@ -15,8 +15,8 @@ export const sendConfirmationEmail = async (toEmail, token) => {
       to: toEmail,
       subject: 'Confirmación de correo electrónico',
       html: `
-          <p>Para confirmar tu correo electrónico, haz clic en el siguiente enlace:</p>
-          <a href="${process.env.BASE_URL}/api/auth/confirm-email/${token}">Confirmar correo electrónico</a>
+          <p>Para confirmar tu correo electrónico, introduce el siguiente código de activación: </p>
+          <code>${token}</code>
         `
     };
 

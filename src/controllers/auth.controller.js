@@ -10,22 +10,22 @@ export const signin = async (req, res) => {
   const userFound = await User.findOne({ email }).populate('role');
 
   if (!userFound) {
-    res.status(400).json({ message: 'User not found' });
+    return res.status(400).json({ id: 'user', code: 400, description: "user not found" });
   }
 
   const matchPassword = await User.verifyPassword(password, userFound.password);
 
   if (!matchPassword)
-    return res.status(401).json({ token: null, message: 'incorrect password' });
+    return res.status(401).json({ id: 'password', code: 401, description: 'incorrect password' });
 
   if (userFound.status !== 'Active')
-    return res.status(400).json({ message: 'unverified email' });
+    return res.status(400).json({ id: 'email', code: 400, description: 'unverified email' });
 
   const token = jwt.sign({ id: userFound._id }, config.SECRET, {
     expiresIn: '24h'
   });
 
-  res.json({ token });
+  res.json(token);
 };
 
 export const signup = async (req, res) => {
@@ -40,7 +40,7 @@ export const signup = async (req, res) => {
 
   if (role) {
     const foundRole = await Role.findOne({ name: role });
-    if ( foundRole.name === 'admin' ) return res.status(401).json({ message: 'unauthorized' });
+    if (foundRole.name === 'admin') return res.status(401).json({ description: 'unauthorized' });
     newUser.role = foundRole._id;
   }
 
@@ -51,7 +51,7 @@ export const signup = async (req, res) => {
 
   sendConfirmationEmail(savedUser.email, token);
 
-  res.status(200).json({ token });
+  res.status(200).json(token);
 };
 
 export const confirmEmail = async (req, res) => {
@@ -60,9 +60,9 @@ export const confirmEmail = async (req, res) => {
     const decoded = jwt.verify(token, config.SECRET);
 
     const user = await User.findById(decoded.id, { password: 0 });
-    if (!user) return res.status(404).json({ message: 'no user found' });
+    if (!user) return res.status(404).json({ id: 'user', code: 400, description: "user not found" });
     if (user.status === 'Active')
-      return res.status(400).json({ message: 'email was already verified' });
+      return res.status(400).json({ id: 'email', code: 400, description: 'email was already verified' });
 
     user.status = 'Active';
 
@@ -73,15 +73,15 @@ export const confirmEmail = async (req, res) => {
       .json('email verification has been completed successfully');
 
   } catch (error) {
-    return res.status(401).json({ message: 'token expired or invalid' });
+    return res.status(401).json({ id: 'token', code: 401, description: 'token expired or invalid' });
   }
 };
 
 export const resendEmail = async (req, res) => {
 
-  const user = await User.findOne({email: req.body.email});
+  const user = await User.findOne({ email: req.body.email });
 
-  if (!user) return res.status(400).json({message: 'no user found'});
+  if (!user) return res.status(400).json({ id: 'user', code: 400, description: "user not found" });
 
   const token = jwt.sign({ id: user._id }, config.SECRET, {
     expiresIn: '24h'
@@ -89,5 +89,5 @@ export const resendEmail = async (req, res) => {
 
   sendConfirmationEmail(user.email, token);
 
-  return res.status(200).json({message: 'the email has been forwarded'});
+  return res.status(200).json('the email has been forwarded');
 };
