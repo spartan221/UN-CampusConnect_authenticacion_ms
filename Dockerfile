@@ -15,6 +15,8 @@ ENV PORT=3000
 ENV SERVICE=gmail
 ENV EMAIL=uncampusconnect@gmail.com
 ENV PASS=nwgxazmrzxacyqgf
+ENV ADMIN_EMAIL=uncampusconnect@gmail.com
+ENV ADMIN_PASS=uncampusconnect2023
 
 # Copy the rest of the application code to the container
 COPY /dist/ ./dist/

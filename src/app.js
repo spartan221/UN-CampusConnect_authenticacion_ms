@@ -3,13 +3,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import pkg from '../package.json';
 
-import { createRoles } from './libs/initialSetup';
-
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 
 const app = express();
-createRoles();
 
 app.set('pkg', pkg);
 
