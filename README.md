@@ -21,3 +21,6 @@ Este repositorio contiene el código del microservicio de autenticación.
 - ENV="DEV"
 - ADMIN_EMAIL="uncampusconnect@gmail.com"
 - ADMIN_PASS="uncampusconnect2023"
+
+*Note: if ENV is not provided, the server will use
+mongodb atlas uri* :smile: 
