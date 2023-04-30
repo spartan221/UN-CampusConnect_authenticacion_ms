@@ -1,4 +1,4 @@
-# Repository of UN-CampusConnect _authenticacion_ms
+# Repository of UN-CampusConnect_authenticacion_ms
 
 
 Este repositorio contiene el código del microservicio de autenticación.

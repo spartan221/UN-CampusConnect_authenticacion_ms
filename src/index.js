@@ -3,7 +3,7 @@ dotenv.config();
 import app from './app';
 import { getDatabase } from './database';
 import { createRoles, createAdmin } from './libs/initialSetup';
-
+import { listenMessagesFromRabbitMQ } from './libs/consumer';
 
 const main = async () => {
     console.log("Server is starting...");
@@ -21,6 +21,7 @@ const main = async () => {
     } catch (error) {
         console.log('MongoDB is not working');
     }
+    listenMessagesFromRabbitMQ();
     app.listen(process.env.PORT);
     console.log('Server listening on port', process.env.PORT);
 };

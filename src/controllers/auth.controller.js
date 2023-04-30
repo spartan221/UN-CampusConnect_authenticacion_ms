@@ -49,7 +49,7 @@ export const signup = async (req, res) => {
     expiresIn: '24h'
   });
 
-  sendConfirmationEmail(savedUser.email, token);
+  // sendConfirmationEmail(savedUser.email, token);
 
   res.status(200).json(token);
 };
@@ -84,7 +84,7 @@ export const resendEmail = async (req, res) => {
   if (!user) return res.status(400).json({ id: 'user', code: 400, description: "user not found" });
 
   const token = jwt.sign({ id: user._id }, config.SECRET, {
-    expiresIn: '24h'
+    expiresIn: '48h'
   });
 
   sendConfirmationEmail(user.email, token);
