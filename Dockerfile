@@ -17,6 +17,7 @@ ENV EMAIL=uncampusconnect@gmail.com
 ENV PASS=nwgxazmrzxacyqgf
 ENV ADMIN_EMAIL=uncampusconnect@gmail.com
 ENV ADMIN_PASS=uncampusconnect2023
+ENV RABBIT_MQ_URL=host.docker.internal
 
 # Copy the rest of the application code to the container
 COPY /dist/ ./dist/
