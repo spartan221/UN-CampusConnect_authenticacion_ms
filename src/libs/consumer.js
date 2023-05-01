@@ -11,7 +11,8 @@ const rabbitMqUrl = process.env.RABBIT_MQ_URL || '127.0.0.1';
 export const listenMessagesFromRabbitMQ = () => {
     amqp.connect(`amqp://${rabbitMqUrl}`, function (error0, connection) {
         if (error0) {
-            throw error0;
+            console.log('Error: RabbitMQ connection error');
+            return;
         }
         connection.createChannel(function (error1, channel) {
             if (error1) {

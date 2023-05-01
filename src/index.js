@@ -16,7 +16,7 @@ const main = async () => {
             await createAdmin(process.env.ADMIN_EMAIL, process.env.ADMIN_PASS);
             console.log('Admin Account has been created');
         } catch (error) {
-            console.log('ERROR:', error.message);            
+            console.log('ERROR:', error.message);
         }
     } catch (error) {
         console.log('MongoDB is not working');

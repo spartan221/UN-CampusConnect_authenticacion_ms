@@ -9,9 +9,10 @@ Este repositorio contiene el código del microservicio de autenticación.
 - MongoDB
 
 ## Usar con docker
-1. Ejecutar `npm run build` en la raiz del proyecto.
-2. Crear la imagen: `docker build -t un-campusconnect_autenticacion_ms .`
-3. Ejecutar el contenedor: `docker run -p 3000:3000 --name un-campusconnect_autenticacion_ms un-campusconnect_autenticacion_ms`
+1. Ejecutar RabbitMQ con el siguiente comando `docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.11-management`
+2. Ejecutar `npm run build` en la raiz del proyecto.
+3. Crear la imagen: `docker build -t un-campusconnect_autenticacion_ms .`
+4. Ejecutar el contenedor: `docker run -p 3000:3000 --name un-campusconnect_autenticacion_ms un-campusconnect_autenticacion_ms`
 
 ## Variables ENV
 - PORT="3000"
