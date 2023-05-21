@@ -8,8 +8,8 @@ export const getUserInfo = async (req, res) => {
 
 export const getMyPersonalInfo = async (req, res) => {
     const user = await User.findById(req.userId).populate('role');
-    const { id, username, email, role } = user;
-    return res.status(200).json({id, username, email, role: role.name});
+    const { id, username, email, role, status } = user;
+    return res.status(200).json({id, username, email, role: role.name, status});
 }
 
 export const getUsers = async (req, res) => {
