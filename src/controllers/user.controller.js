@@ -16,13 +16,20 @@ export const getUsers = async (req, res) => {
     const usersFetched = await User.find().populate('role');
     const users = usersFetched.map((user) =>
     ({
-        id: user._id,
+        id: user.id,
         username: user.username, 
         email: user.email, 
-        role: user.role.name
+        role: user.role.name,
+        status: user.status
     }));
     return res.status(200).json(users);
 }
+
+export const getEmails = async (req, res) => {
+    const usersFetched = await User.find().populate('role');
+    const emails = usersFetched.filter((user) => user.role && user.role.name !== 'admin' && user.status === 'Active').map((user) => user.email);
+    return res.status(200).json(emails);
+    }
 
 export const unsubscribe = async (req, res) => {
     const userId = req.userId;
