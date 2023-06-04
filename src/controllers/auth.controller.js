@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config';
 import Role from '../models/Role';
 import { sendConfirmationEmail } from '../libs/nodemailer';
+import { addUser, searchUser } from '../libs/ldap/client';
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -17,6 +18,9 @@ export const signin = async (req, res) => {
 
   if (!matchPassword)
     return res.status(401).json({ id: 'password', code: 401, description: 'incorrect password' });
+
+  const ldapRes = await searchUser(userFound.username, password);
+  if (!ldapRes) return res.status(400).json({ id: 'user', code: 400, description: "LDAP: user not found" });
 
   if (userFound.status !== 'Active')
     return res.status(400).json({ id: 'email', code: 400, description: 'unverified email' });
@@ -45,6 +49,11 @@ export const signup = async (req, res) => {
   }
 
   const savedUser = await newUser.save();
+
+  // Guardar en el servidor ldap
+  const ldapResp = await addUser({ username, email, password, id: savedUser._id });
+  if (!ldapResp) console.log("LDAP: user not saved")
+
   const token = jwt.sign({ id: savedUser._id }, config.SECRET, {
     expiresIn: '24h'
   });
