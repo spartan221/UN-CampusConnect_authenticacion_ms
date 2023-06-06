@@ -1,4 +1,12 @@
 import User from "../models/User";
+import axios from "axios";
+import { xml2json } from "xml-js";
+
+// import File System Module
+import fs from "fs"; 
+  
+// import xml2js Module
+import { parseString } from "xml2js"; 
 
 export const getUserInfo = async (req, res) => {
     const user = await User.findById(req.params.id).populate('role');
@@ -36,4 +44,20 @@ export const unsubscribe = async (req, res) => {
     await User.findByIdAndDelete(userId);
     return res.status(200).json("your account has been deleted");
   };
+
+export const getExternalUsers = async (req, res) => {
+    const soapEnvelope =
+        `<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:your='your-namespace'><soapenv:Header/><soapenv:Body><your:getAllProfiles/></soapenv:Body></soapenv:Envelope>`
+    const users = await axios.post('https://tutoacademy-int-rp-f-oadjztiq2a-uc.a.run.app/action', soapEnvelope, {
+        headers: {
+            'Content-Type': 'application/xml',
+            'Accept': 'application/xml'
+        }
+    });
+    const myJson = xml2json(users.data, {compact: true, spaces: 4});
+    const numUsers = myJson.match(/tns:userId/g).length
+    console.log(numUsers);
+
+    return res.status(200).json({numUsers: numUsers});
+}
   
