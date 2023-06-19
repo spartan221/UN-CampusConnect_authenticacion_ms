@@ -21,6 +21,7 @@ ENV RABBIT_MQ_URL=172.17.0.1
 ENV RABBIT_MQ_QUEUE=emails
 ENV LDAP_URL=172.17.0.1
 ENV LDAP_PORT=389
+ENV DB_URI=mongodb://34.71.18.215:27017/UN-CampusConnect_autenticacion_db?directConnection=true&tls=false
 
 # Copy the rest of the application code to the container
 COPY /dist/ ./dist/

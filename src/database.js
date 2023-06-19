@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const DB_URI = Object.freeze({
     DEV: 'mongodb://127.0.0.1:27017/UN-CampusConnect_autenticacion_db',
-    PROD: 'mongodb+srv://uncampus-admin:uncampus2023@auth-ms-db.azcborv.mongodb.net/UN-CampusConnect_autenticacion_db?retryWrites=true&w=majority&authMechanism=DEFAULT'
+    PROD: process.env.DB_URI || 'mongodb+srv://uncampus-admin:uncampus2023@auth-ms-db.azcborv.mongodb.net/UN-CampusConnect_autenticacion_db?retryWrites=true&w=majority&authMechanism=DEFAULT'
 });
 
 export const getDatabase = async (isDevEnv) => {
