@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
+import {transporter} from '../index'
 
-export const sendConfirmationEmail = async (toEmail, token) => {
+export const authToMailService = () => {
   try {
     const transporter = nodemailer.createTransport({
       service: process.env.SERVICE,
@@ -9,7 +10,14 @@ export const sendConfirmationEmail = async (toEmail, token) => {
         pass: String(process.env.PASS)
       }
     });
+    return transporter;
+  } catch (error) {
+    console.log(error);    
+  }
+}
 
+export const sendConfirmationEmail = async (toEmail, token) => {
+  try {
     const mailOptions = {
       from: process.env.USER,
       to: toEmail,
@@ -19,7 +27,6 @@ export const sendConfirmationEmail = async (toEmail, token) => {
           <code>${token}</code>
         `
     };
-
     const info = await transporter.sendMail(mailOptions);
     console.log(`Correo electrónico enviado: ${info.messageId}`);
   } catch (error) {
